@@ -1,0 +1,19 @@
+
+#app{
+    width: 800px;
+    margin: 0px auto;
+
+}
+div{
+    height: auto;
+}
+
+#app #body{
+    width: 100%;
+    height: auto;
+}
+
+
+.odd{
+    background-color: red;
+}

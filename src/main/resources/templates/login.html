@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{css/groble.css}" type="text/css" rel="stylesheet"/>
+    <script th:src="@{js/jquery-1.12.4.js}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+           $("#btnLogin").click(function () {
+               var code=$("#userCode").val();
+               var pass=$("#password").val();
+               if(code==""){
+                   alert("用户名不能为空");
+                   return;
+               }
+               if(code.length<7){
+                   alert("用户名长度大于等于7");
+                   return;
+               }
+               if(pass==""){
+                   alert("密码不能为空");
+                   return;
+               }
+               if(pass.length<6){
+                   alert("密码长度大于等于6");
+                   return;
+               }
+               $.ajax({
+                   url:"/login",
+                   type:"post",
+                   data:{"userCode":code,"password":pass},
+                   success:function (res) {
+                       if(res=="ok"){
+                           alert("登录成功");
+                           location.href="/index";
+                       }else if(res=="1"){
+                           alert("用户名不存在");
+                       }else if(res=="2"){
+                           alert("用户名或密码有误");
+                       }else if(res=="3"){
+                           alert("更新用户登录失败");
+                       }
+                   }
+               });
+           });
+        });
+    </script>
+</head>
+<body>
+<div id="app">
+    <table>
+        <tr>
+            <td></td>
+            <td>图书借阅系统</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>用户名：<input type="text" name="userCode" id="userCode"/></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>密码：<input type="text" name="password" id="password"/></td>
+            <td></td>
+        </tr>
+        <tr>
+
+            <td><input type="button" id="btnLogin" name="btnLogin" value="登录"/></td>
+            <td><input type="button" id="btnReg" name="btnReg" value="注册"/></td>
+            <td></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

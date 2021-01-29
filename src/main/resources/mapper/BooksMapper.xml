@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myit.dao.BooksMapper">
+  <resultMap id="BaseResultMap" type="com.myit.pojo.Books">
+    <id column="bookId" jdbcType="INTEGER" property="bookId" />
+    <result column="bookCode" jdbcType="VARCHAR" property="bookCode" />
+    <result column="bookName" jdbcType="VARCHAR" property="bookName" />
+    <result column="bookType" jdbcType="INTEGER" property="bookType" />
+    <result column="bookAuthor" jdbcType="VARCHAR" property="bookAuthor" />
+    <result column="publishPress" jdbcType="VARCHAR" property="publishPress" />
+    <result column="publishDate" jdbcType="DATE" property="publishDate" />
+    <result column="isBrrowed" jdbcType="INTEGER" property="isBorrowed" />
+    <result column="createdBy" jdbcType="VARCHAR" property="createdBy" />
+    <result column="creationTime" jdbcType="TIMESTAMP" property="creationTime" />
+    <result column="lastUpdateTime" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+  </resultMap>
+  <select id="getCount" resultType="Integer">
+    select count(*) from  book_info
+    <where>
+      <trim prefixOverrides="and" >
+      <if test="bookType != null">
+          and bookType=#{bookType}
+      </if>
+      <if test="bookName != null">
+        and bookName=#{bookName}
+      </if>
+      <if test="isBorrowed != null">
+        and isBrrowed=#{isBorrowed}
+      </if>
+      </trim>
+    </where>
+  </select>
+
+  <select id="getBooks" resultMap="BaseResultMap">
+    select * from  book_info
+    <where>
+      <trim prefixOverrides="and" >
+        <if test="bookType != null and bookType !=-1">
+          and bookType=#{bookType}
+        </if>
+        <if test="bookName != null">
+          and bookName=#{bookName}
+        </if>
+        <if test="isBorrowed != null and isBorrowed !=-1">
+          and isBrrowed=#{isBorrowed}
+        </if>
+      </trim>
+    </where>
+     limit #{pageStart},#{pageSize}
+  </select>
+
+</mapper>
